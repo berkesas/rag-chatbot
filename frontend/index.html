@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chat</title>
+    <!-- Link to TailwindCSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="chat.css">
+</head>
+
+<body class="bg-gray-100">
+    <!-- Navbar -->
+    <nav class="bg-blue-600 text-white p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="#" class="text-lg font-bold">AI Chat Demo</a>
+            <ul class="flex space-x-4">
+                <li><a href="#" class="hover:underline">Home</a></li>
+                <li><a href="#" class="hover:underline">About</a></li>
+                <li><a href="#" class="hover:underline">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mx-auto py-10 flex items-center justify-center min-h-screen">
+        Your content here
+    </div>
+
+    <!-- Chatbox -->
+    <div id="chatBubble" class="fixed z-10 justify-end bottom-4 right-4 overflow-hidden fill-cyan-500">
+        <div class="w-auto h-auto content-start bg-white p-2 border rounded-2xl shadow-lg mt-2 text-sm">
+            <p>Hello! How can I help you today?</p>
+        </div>
+        <div id="btnChat" class="flex justify-end">
+            <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="blue" class="bi bi-chat-dots-fill"
+                viewBox="0 0 16 16">
+                <path
+                    d="M16 8c0 3.866-3.582 7-8 7a9 9 0 0 1-2.347-.306c-.584.296-1.925.864-4.181 1.234-.2.032-.352-.176-.273-.362.354-.836.674-1.95.77-2.966C.744 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7M5 8a1 1 0 1 0-2 0 1 1 0 0 0 2 0m4 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0m3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2" />
+            </svg>
+        </div>
+    </div>
+    <!-- Chat window -->
+    <div id="chatWindow"
+        class="fixed flex flex-col bg-white bottom-4 right-4 w-96 h-5/6 shadow-lg rounded-lg overflow-hidden">
+        <div class="flex justify-between bg-blue-600 text-white p-2">
+            <div class="inline-flex items-center">
+                <img src="chatbot-avatar.png" width="50">
+                <span class="ml-2 text-lg">Virtual Chat</span>
+            </div>
+            <button id="btnClose" class="mr-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="white" class="bi bi-x-lg"
+                    viewBox="0 0 16 16">
+                    <path
+                        d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
+                </svg>
+            </button>
+        </div>
+        <div id="chatList" class="p-2 flex-1 overflow-y-auto">
+            <!-- Chat messages will go here -->
+            <ul id="chatHistory" class="text-sm gap-y-2">
+            </ul>
+            <ul id="divLoading">
+                <li>
+                    <div class="flex mt-2 gap-x-2 justify-end">
+                        <div class="">
+                            <div class="w-full rounded-lg bg-gray-50 p-3">
+                                <div class="loading-dots">
+                                    <div class="dot"></div>
+                                    <div class="dot"></div>
+                                    <div class="dot"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div><img src="chatbot-avatar.png" width="50"></div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="flex h-40 p-4 border-t items-start">
+            <textarea id="txtQuestion" type="text" placeholder="Ask me something..."
+                class="flex-1 align-text-top p-2 h-32 border border-gray-300 rounded-lg bg-gray-100 text-sm"></textarea>
+            <button id="btnSend" class="ml-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="blue" class="bi bi-send-fill"
+                    viewBox="0 0 16 16">
+                    <path
+                        d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471z" />
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="chat.js"></script>
+    <!-- JavaScript -->
+
+</body>
+
+</html>
