@@ -1,0 +1,42 @@
+.loading-dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  margin: 0 4px;
+  background-color: #333;
+  border-radius: 50%;
+  animation: dot-blink 1.4s infinite both;
+}
+
+.dot:nth-child(1) {
+  animation-delay: -0.32s;
+}
+
+.dot:nth-child(2) {
+  animation-delay: -0.16s;
+}
+
+@keyframes dot-blink {
+  0%,
+  80%,
+  100% {
+    opacity: 0;
+  }
+
+  40% {
+    opacity: 1;
+  }
+}
+
+.wrapper {
+  width: 300px; /* Set the width of the div */
+  border: 1px solid #000; /* Optional: Add a border for visibility */
+  padding: 10px; /* Optional: Add padding for better appearance */
+  word-wrap: break-word; /* Force long words to wrap */
+  white-space: normal; /* Ensure normal white-space handling */
+}
