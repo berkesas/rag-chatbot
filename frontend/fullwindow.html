@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chat</title>
+    <!-- Link to TailwindCSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="chat.css">
+</head>
+
+<body class="h-screen flex flex-col bg-gray-100">
+    <!-- Navbar -->
+    <nav class="w-full bg-blue-600 text-white p-4 shadow-md h-15">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="#" class="text-lg font-bold">AI Chat Demo</a>
+            <ul class="flex space-x-4">
+                <li><a href="index.html" class="hover:underline">Home</a></li>
+                <li><a href="fullwindow.html" class="hover:underline">Full window</a></li>
+                <li><a href="#" class="hover:underline">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+    <!-- Chatbox -->
+    <!-- Chat window -->
+    <div id="chatList" class="flex-grow overflow-y-auto min-h-0 p-2 bg-white">
+        <div class="p-2 flex-1 overflow-y-auto">
+            <!-- Chat messages will go here -->
+            <ul id="chatHistory" class="text-sm gap-y-2">
+                Let's chat!
+            </ul>
+            <ul id="divLoading">
+                <li>
+                    <div class="flex mt-2 gap-x-2 justify-end">
+                        <div class="">
+                            <div class="w-full rounded-lg bg-gray-50 p-3">
+                                <div class="loading-dots">
+                                    <div class="dot"></div>
+                                    <div class="dot"></div>
+                                    <div class="dot"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div><img src="chatbot-avatar.png" width="50"></div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="bottom-0 w-full flex h-40 p-4 border-t items-start bg-white">
+        <textarea id="txtQuestion" type="text" placeholder="Ask me something..."
+            class="flex-1 align-text-top p-2 h-32 border border-gray-300 rounded-lg bg-gray-100 text-sm"></textarea>
+        <button id="btnSend" class="ml-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="blue" class="bi bi-send-fill"
+                viewBox="0 0 16 16">
+                <path
+                    d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471z" />
+            </svg>
+        </button>
+    </div>
+
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="chat.js"></script>
+    <!-- JavaScript -->
+
+</body>
+
+</html>

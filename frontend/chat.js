@@ -15,7 +15,7 @@ jQuery(document).ready(function ($) {
         // }
     });
 
-    // const chatApi = 'http://192.168.0.64/api/chattest';
+    // const chatApi = 'http://192.168.0.64:5001/api/chattest';
     const chatApi = 'http://192.168.0.64:5001/api/chat';
 
     let introduced = false;
@@ -50,10 +50,11 @@ jQuery(document).ready(function ($) {
         askQuestion();
     });
 
-    window.askProposedQuestion = function (el) {
-        question = el.innerHTML.trim();
+    window.askProposedQuestion = function (question, auto_submit = true) {
         $("#txtQuestion").val(question);
-        askQuestion();
+        if (auto_submit) {
+            askQuestion();
+        }
     }
 
     $("#txtQuestion").keydown(function (event) {
@@ -122,6 +123,13 @@ jQuery(document).ready(function ($) {
                 scrollMessages();
             },
             error: function (xhr, status, error) {
+                const msg = {
+                    "source": 'server',
+                    "text": "Sorry, there was an error.",
+                    "created": new Date(),
+                    "additionalQuestions": []
+                };
+                addMessage(msg);
                 console.error("Error:", error);
                 $('#divLoading').show();
                 scrollMessages();
@@ -142,6 +150,12 @@ jQuery(document).ready(function ($) {
         currentId++;
     }
 
+
+    function scrollMessages() {
+        let div = $("#chatList");
+        div.scrollTop(div[0].scrollHeight);
+    }
+
     // function initiateTypeWriter(msg, currentId) {
     //     currentBox = 'msg' + currentId;
     //     currentCharIndex = 0;
@@ -149,11 +163,6 @@ jQuery(document).ready(function ($) {
     //     chunkSize = Math.floor(currentTxt.length / speed);
     //     console.log(currentBox, currentCharIndex, currentTxt);
     // }
-
-    function scrollMessages() {
-        let div = $("#chatList");
-        div.scrollTop(div[0].scrollHeight);
-    }
 
     // function typeWriter() {
     //     if (currentCharIndex + chunkSize < currentTxt.length) {
@@ -166,19 +175,26 @@ jQuery(document).ready(function ($) {
     //     scrollMessages();
     // }
 
+    function preprocess_message(text) {
+        text = text.replace(/<(.*?)>/g, '<a href="$1" class="text-blue-500 underline" target="_blank">$1</a>');
+        text = text.replace(/\[(.*?)\](.*?)\)/g, '<a href="$2" class="text-blue-500 underline" target="_blank">$2</a>')
+        return text.replace('\n', '<br>');
+    }
+
     function getServerMessageCode(id, message) {
         proposed_questions = message.additionalQuestions.map((val, index) =>
-            `<div class="flex my-1"><div onclick="askProposedQuestion(this)"
+            `<div class="flex my-1"><div onclick="askProposedQuestion('` + val + `')"
                     class="cursor-pointer bg-white hover:bg-slate-100 border rounded-xl p-1 px-2 text-xs">
                     `+ val + `
             </div></div>`
         ).join('');
 
+
         return `<li id="server` + id + `">
             <div class="flex mt-2 gap-x-2"> 
                 <div class="w-full">
                     <div id="msg`+ id + `" class="w-full whitespace-normal text-wrap break-normal rounded-lg bg-gray-100 p-3">
-                        `+ message.text + `
+                        `+ preprocess_message(message.text) + `
                     </div>
                     <div class="flex justify-end text-xs px-2 text-gray-400">`+ (new Date()).toLocaleTimeString('en-US', dateFormatOptions) + `
                     </div>
@@ -199,8 +215,8 @@ jQuery(document).ready(function ($) {
                     </svg>
                 </div>
                 <div class="w-full">
-                    <div class="w-full rounded-lg bg-gray-100 p-3">` + message.text + `</div>
-                    <div class="flex justify-end text-xs px-2 text-gray-400">`+ (new Date()).toLocaleTimeString('en-US', dateFormatOptions) + `
+                    <div class="w-full rounded-lg bg-gray-100 p-3">` + message.text.replace('\n', '<br>') + `</div>
+                    <div class="flex justify-end text-xs px-2 text-gray-400"><button onclick="askProposedQuestion('`+ message.text.replace('\n', ' ') + `', false);">Edit</button>&nbsp;&nbsp;&nbsp;<button onclick="askProposedQuestion('` + message.text.replace('\n', ' ') + `', true);">Resubmit</button>&nbsp;&nbsp;&nbsp;` + (new Date()).toLocaleTimeString('en-US', dateFormatOptions) + `
                     </div>
                 </div>
             </div>
