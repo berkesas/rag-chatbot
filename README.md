@@ -1,6 +1,16 @@
 # rag-chatbot
 Basic rag chatbot application with Python Flask
 
+All images are from Pexels.com
+
+# Useful software
+
+I recommend to install the following to be able to test easily on the local server:
+
+- VS Code obviously and Live Server extension
+- an API client Bruno 
+- LM Studio and Llama2 LLM
+
 ## Creating a virtual environment
 
 First let's create a virtual environment isolated from your system-level installation of Python. In the application folder, we use the `venv` module to create a virtual environment called `venv`. Let's assume your folder is `C:\web\rag-chatbot`.
@@ -25,7 +35,7 @@ On Linux
 
 ## Installing required Python packages
 
-Now we'll install flask, flask-cors, dotenv, chromadb, google-genai packages.
+We'll install flask, flask-cors, dotenv, chromadb, google-genai packages.
 
 **flask** - creates a basic web server to run Python files.
 
@@ -37,8 +47,10 @@ Now we'll install flask, flask-cors, dotenv, chromadb, google-genai packages.
 
 **google-genai** - enables using Google Generative AI API
 
+We'll use requirements.txt file because there are many interdependent packages 
+
 ```
-pip install flask flask-cors dotenv chromadb google-genai
+(venv) C:\web\rag-chatbot>pip install -r requirements.txt
 ```
 
 ## Running the flask app
