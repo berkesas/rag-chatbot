@@ -11,6 +11,12 @@ I recommend to install the following to be able to test easily on the local serv
 - an API client Bruno 
 - LM Studio and Llama2 LLM
 
+## Get the repo
+
+```bash
+>git clone https://github.com/berkesas/rag-chatbot.git
+```
+
 ## Creating a virtual environment
 
 First let's create a virtual environment isolated from your system-level installation of Python. In the application folder, we use the `venv` module to create a virtual environment called `venv`. Let's assume your folder is `C:\web\rag-chatbot`.
@@ -66,4 +72,14 @@ The app will run with the settings indicated in this section of `app.py`.
 ```python
 if __name__ == "__main__":
     app.run(host='192.168.0.64', port=5001, debug=DEBUG)
+```
+
+## Testing remotely
+
+Testing remotely requires to setup your own Google service API key in the `dev.env` file
+
+```python
+API_KEY='your-api-key'
+EMBEDDING_MODEL='models/text-embedding-004'
+GENERATIVE_MODEL='gemini-2.0-flash'
 ```
