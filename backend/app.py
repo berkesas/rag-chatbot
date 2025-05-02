@@ -3,11 +3,13 @@ from dotenv import load_dotenv
 from datetime import datetime
 from flask import Flask,  jsonify, make_response, request
 from flask_cors import CORS
-from server import generate_answer, get_related_questions
+from local_server import create_response
+# from server import create_response
 
 # Load variables from .env file
-env = os.getenv('APP_ENV', 'dev')
+env = os.getenv('APP_ENV', 'local_dev')
 dotenv_path = f'{env}.env'
+print("Loading environment:", dotenv_path)
 load_dotenv(dotenv_path)
 
 DEBUG = os.getenv('DEBUG')
@@ -46,15 +48,8 @@ def chat():
             request.headers['Host'], 0) + 1
 
         if host_questions[request.headers['Host']] < MAX_QUESTIONS:
-            answer = generate_answer(question)
-            related_questions = get_related_questions(question)
-            response = {
-                "source": 'server',
-                "text": answer,
-                "created": datetime.now().isoformat(),
-                "additionalQuestions": related_questions
-            }
-            record_question(LOG_FILE, question+"\n"+answer, request)
+            response = create_response(question)
+            record_question(LOG_FILE, question+"\n"+str(response), request)
         else:
             response = {
                 "source": 'server',

@@ -5,6 +5,8 @@ from google.genai import types
 
 import chromadb
 from chromadb import EmbeddingFunction
+from chromadb.utils.embedding_functions import OpenCLIPEmbeddingFunction
+from chromadb.utils.data_loaders import ImageLoader
 
 # Load variables from .env file
 env = os.getenv('APP_ENV', 'dev')
@@ -12,9 +14,11 @@ dotenv_path = f'{env}.env'
 load_dotenv(dotenv_path)
 
 SOURCE_PATH = os.getenv('SOURCE_PATH')
+IMAGE_PATH = os.getenv('IMAGE_PATH')
 DATABASE_PATH = os.getenv('DATABASE_PATH')
 DOCUMENTS_COLLECTION = os.getenv('DOCUMENTS_COLLECTION')
 QUESTIONS_COLLECTION = os.getenv('QUESTIONS_COLLECTION')
+IMAGES_COLLECTION = os.getenv('IMAGES_COLLECTION')
 
 API_KEY = os.getenv('API_KEY')
 EMBEDDING_MODEL = os.getenv('EMBEDDING_MODEL')
@@ -22,6 +26,11 @@ GENERATIVE_MODEL = os.getenv('GENERATIVE_MODEL')
 
 # Initialize the client with your API key
 client = genai.Client(api_key=API_KEY)
+
+# multimodal embedding function to embed images and text
+multimodal_embedding_function = OpenCLIPEmbeddingFunction()
+# loads images from the collection
+data_loader = ImageLoader()
 
 
 class GeminiEmbeddingFunction(EmbeddingFunction):
@@ -74,11 +83,28 @@ def create_documents(source_path):
     return documents
 
 
-# List available models
-for model in client.models.list():
-    for action in model.supported_actions:
-        if action == "embedContent":
-            print(model.name)
+def create_image_collection(collection_name, db_path, image_path, image_loader):
+    chroma_client = chromadb.PersistentClient(path=db_path)
+    try:
+        chroma_client.delete_collection(name=collection_name)
+    except Exception as e:
+        print(e)
+
+    collection = chroma_client.create_collection(
+        name=collection_name,
+        embedding_function=multimodal_embedding_function,
+        data_loader=image_loader)
+
+    image_uris = sorted([os.path.join(image_path, image_name)
+                        for image_name in os.listdir(image_path)])
+    ids = [str(i) for i in range(len(image_uris))]
+
+    for i in range(len(image_uris)):
+        print('processing image: ', image_uris[i])
+        collection.add(ids=[str(i)], uris=[image_uris[i]])
+
+    return collection
+
 
 documents = create_documents(SOURCE_PATH)
 collection = create_chroma_db(
@@ -97,3 +123,6 @@ questions = [
 
 question_collection = create_chroma_db(
     questions, QUESTIONS_COLLECTION, DATABASE_PATH)
+
+images_collection = create_image_collection(
+    IMAGES_COLLECTION, DATABASE_PATH, IMAGE_PATH, data_loader)
