@@ -16,6 +16,14 @@ I recommend to install the following to be able to test easily on the local serv
 ```bash
 >git clone https://github.com/berkesas/rag-chatbot.git
 ```
+## If pip and venv not installed
+
+Install pip and venv if for some reason you don't have it.
+
+```bash
+python -m ensurepip --default-pip
+pip install virtualenv
+```
 
 ## Creating a virtual environment
 
