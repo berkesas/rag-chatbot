@@ -93,4 +93,4 @@ def record_question(file, question, request):
 
 
 if __name__ == "__main__":
-    app.run(host='192.168.0.64', port=5001, debug=DEBUG)
+    app.run(host='10.10.193.224', port=5001, debug=DEBUG)

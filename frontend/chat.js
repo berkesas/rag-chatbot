@@ -15,8 +15,8 @@ jQuery(document).ready(function ($) {
         // }
     });
 
-    // const chatApi = 'http://192.168.0.64:5001/api/chattest';
-    const chatApi = 'http://192.168.0.64:5001/api/chat';
+    // const chatApi = 'http://10.10.193.224:5001/api/chattest';
+    const chatApi = 'http://10.10.193.224:5001/api/chat';
 
     let introduced = false;
     let chatVisible = false;
@@ -176,8 +176,8 @@ jQuery(document).ready(function ($) {
     // }
 
     function preprocess_message(text) {
-        text = text.replace(/<(.*?)>/g, '<a href="$1" class="text-blue-500 underline" target="_blank">$1</a>');
-        text = text.replace(/\[(.*?)\](.*?)\)/g, '<a href="$2" class="text-blue-500 underline" target="_blank">$2</a>')
+        // text = text.replace(/<(.*?)>/g, '<a href="$1" class="text-blue-500 underline" target="_blank">$1</a>');
+        // text = text.replace(/\[(.*?)\](.*?)\)/g, '<a href="$2" class="text-blue-500 underline" target="_blank">$2</a>')
         return text.replace('\n', '<br>');
     }
 
